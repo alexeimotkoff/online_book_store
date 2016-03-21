@@ -9,7 +9,7 @@ namespace online_book_store.UnitTests
         [TestMethod]
         public void TestMethod1()
         {
-            //comment
+            мда как так можно то
         }
     }
 }
