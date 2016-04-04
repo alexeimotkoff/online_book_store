@@ -53,6 +53,8 @@ namespace online_book_store.WebUI.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
+            System.Web.Mvc.DependencyResolver.SetResolver(new
+        online_book_store.WebUI.Infrastructure.NinjectDependencyResolver(kernel));
         }        
     }
 }
