@@ -9,7 +9,6 @@ namespace online_book_store.UnitTests
         [TestMethod]
         public void TestMethod1()
         {
-            int r = 0;
         }
     }
 }
