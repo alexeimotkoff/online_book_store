@@ -8,7 +8,7 @@ using online_book_store.WebUI.Models;
 
 namespace online_book_store.WebUI.HtmlHelpers
 {
-    public class PagingHelpers
+    public static class PagingHelpers
     {
         public static MvcHtmlString PageLinks(this HtmlHelper html,
                                               PagingInfo pagingInfo,
