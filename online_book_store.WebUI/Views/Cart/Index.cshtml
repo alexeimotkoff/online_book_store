@@ -10,6 +10,7 @@
         <tr>
             <th>Кол-во</th>
             <th>Книга</th>
+            <th>Автор</th>
             <th class="text-right">Цена</th>
             <th class="text-right">Общая цена</th>
         </tr>
@@ -20,6 +21,7 @@
             <tr>
                 <td class="text-center">@line.Quantity</td>
                 <td class="text-left">@line.Book.Name</td>
+                <td class="text-left">@line.Book.Author</td>
                 <td class="text-right">@line.Book.Price.ToString("# руб")</td>
                 <td class="text-right">
                     @((line.Quantity * line.Book.Price).ToString("# руб"))

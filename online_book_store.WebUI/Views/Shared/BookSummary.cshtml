@@ -5,6 +5,7 @@
         <strong>@Model.Name</strong>
         <span class="pull-right label label-primary">@Model.Price.ToString("# руб")</span>
     </h3>
+    <h4>@Model.Author</h4>
     @using (Html.BeginForm("AddToCart", "Cart"))
 {
     <div class="pull-right">
