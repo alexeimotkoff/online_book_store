@@ -8,7 +8,7 @@ using online_book_store.Domain.Entities;
 using online_book_store.WebUI.Models;
 
 namespace online_book_store.WebUI.Controllers
-{
+{ 
     public class BookController : Controller
     {
         private IBookRepository repository;
