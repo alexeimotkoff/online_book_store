@@ -9,9 +9,11 @@ namespace online_book_store.WebUI.Controllers
     public class CartController : Controller
     {
         private IBookRepository repository;
-        public CartController(IBookRepository repo)
+        private IOrderProcessor orderProcessor;
+        public CartController(IBookRepository repo, IOrderProcessor processor)
         {
             repository = repo;
+            orderProcessor = processor;
         }
         public ViewResult Index(Cart cart, string returnUrl)
         {
@@ -47,6 +49,25 @@ namespace online_book_store.WebUI.Controllers
         public PartialViewResult Summary(Cart cart)
         {
             return PartialView(cart);
+        }
+        [HttpPost]
+        public ViewResult Checkout(Cart cart, ShippingDetails shippingDetails)
+        {
+            if (cart.Lines.Count() == 0)
+            {
+                ModelState.AddModelError("", "Извините, ваша корзина пуста!");
+            }
+
+            if (ModelState.IsValid)
+            {
+                orderProcessor.ProcessOrder(cart, shippingDetails);
+                cart.Clear();
+                return View("Completed");
+            }
+            else
+            {
+                return View(shippingDetails);
+            }
         }
 	}
 }
