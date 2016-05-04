@@ -117,5 +117,79 @@ namespace online_book_store.UnitTests
             Assert.IsTrue(result[0].Name == "Книга2" && result[0].Category == "Cat2");
             Assert.IsTrue(result[1].Name == "Книга4" && result[1].Category == "Cat2");
         }
+        [TestMethod]
+        public void Can_Create_Categories()
+        {
+            // Организация - создание имитированного хранилища
+            Mock<IBookRepository> mock = new Mock<IBookRepository>();
+            mock.Setup(m => m.Games).Returns(new List<Game> {
+        		new Book { BookId = 1, Name = "Книга1", Category="Поэзия"},
+        		new Book { BookId = 2, Name = "Книга2", Category="Поэзия"},
+        		new Book { BookId = 3, Name = "Книга3", Category="Фэнтези"},
+        		new Book { BookId = 4, Name = "Книга4", Category="Классическая литература"},
+    		});
+
+            // Организация - создание контроллера
+            NavController target = new NavController(mock.Object);
+
+            // Действие - получение набора категорий
+            List<string> results = ((IEnumerable<string>)target.Menu().Model).ToList();
+
+            // Утверждение
+            Assert.AreEqual(results.Count(), 3);
+            Assert.AreEqual(results[0], "Классическая литература");
+            Assert.AreEqual(results[1], "Поэзия");
+            Assert.AreEqual(results[2], "Фэнтези");
+        }
+        [TestMethod]
+        public void Indicates_Selected_Category()
+        {
+            // Организация - создание имитированного хранилища
+            Mock<IBookRepository> mock = new Mock<IBookRepository>();
+            mock.Setup(m => m.Books).Returns(new Book[] {
+        		new Book { BookId = 1, Name = "Игра1", Category="Поэзия"},
+        		new Book { BookId = 2, Name = "Игра2", Category="Фэнтези"}
+    		});
+
+            // Организация - создание контроллера
+            NavController target = new NavController(mock.Object);
+
+            // Организация - определение выбранной категории
+            string categoryToSelect = "Фэнтези";
+
+            // Действие
+            string result = target.Menu(categoryToSelect).ViewBag.SelectedCategory;
+
+            // Утверждение
+            Assert.AreEqual(categoryToSelect, result);
+        }
+        [TestMethod]
+        public void Generate_Category_Specific_Book_Count()
+        {
+            /// Организация (arrange)
+            Mock<IBookRepository> mock = new Mock<IBookRepository>();
+            mock.Setup(m => m.Books).Returns(new List<Book>
+    		{
+        		new Book { BookId = 1, Name = "Книга1", Category="Cat1"},
+        		new Book { BookId = 2, Name = "Книга2", Category="Cat2"},
+        		new Book { BookId = 3, Name = "Книга3", Category="Cat1"},
+        		new Book { BookId = 4, Name = "Книга4", Category="Cat2"},
+        		new Book { BookId = 5, Name = "Книга5", Category="Cat3"}
+    		});
+            BookController controller = new BookController(mock.Object);
+            controller.pageSize = 3;
+
+            // Действие - тестирование счетчиков товаров для различных категорий
+            int res1 = ((BooksListViewModel)controller.List("Cat1").Model).PagingInfo.TotalItems;
+            int res2 = ((BooksListViewModel)controller.List("Cat2").Model).PagingInfo.TotalItems;
+            int res3 = ((BooksListViewModel)controller.List("Cat3").Model).PagingInfo.TotalItems;
+            int resAll = ((BooksListViewModel)controller.List(null).Model).PagingInfo.TotalItems;
+
+            // Утверждение
+            Assert.AreEqual(res1, 2);
+            Assert.AreEqual(res2, 2);
+            Assert.AreEqual(res3, 1);
+            Assert.AreEqual(resAll, 5);
+        }
 	}
 }
