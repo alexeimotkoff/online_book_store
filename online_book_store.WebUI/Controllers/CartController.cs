@@ -50,6 +50,10 @@ namespace online_book_store.WebUI.Controllers
         {
             return PartialView(cart);
         }
+        public ViewResult Checkout()
+        {
+            return View(new ShippingDetails());
+        }
         [HttpPost]
         public ViewResult Checkout(Cart cart, ShippingDetails shippingDetails)
         {

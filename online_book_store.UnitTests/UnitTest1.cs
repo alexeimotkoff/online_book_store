@@ -122,7 +122,7 @@ namespace online_book_store.UnitTests
         {
             // Организация - создание имитированного хранилища
             Mock<IBookRepository> mock = new Mock<IBookRepository>();
-            mock.Setup(m => m.Games).Returns(new List<Game> {
+            mock.Setup(m => m.Books).Returns(new List<Book> {
         		new Book { BookId = 1, Name = "Книга1", Category="Поэзия"},
         		new Book { BookId = 2, Name = "Книга2", Category="Поэзия"},
         		new Book { BookId = 3, Name = "Книга3", Category="Фэнтези"},
