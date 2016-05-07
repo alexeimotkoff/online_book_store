@@ -7,5 +7,6 @@ namespace online_book_store.Domain.Abstract
     {
         IEnumerable<Book> Books { get; }
         void SaveBook(Book book);
+        Book DeleteBook(int bookId);
     }
 }

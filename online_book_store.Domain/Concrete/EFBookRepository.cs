@@ -33,5 +33,15 @@ namespace online_book_store.Domain.Concrete
             }
             context.SaveChanges();
         }
+        public Book DeleteGame(int bookId)
+        {
+            Book dbEntry = context.Books.Find(bookId);
+            if (dbEntry != null)
+            {
+                context.Books.Remove(dbEntry);
+                context.SaveChanges();
+            }
+            return dbEntry;
+        }
     }
 }
