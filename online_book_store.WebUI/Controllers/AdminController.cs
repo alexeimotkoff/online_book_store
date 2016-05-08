@@ -8,6 +8,7 @@ using online_book_store.Domain.Entities;
 
 namespace online_book_store.WebUI.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
         IBookRepository repository;

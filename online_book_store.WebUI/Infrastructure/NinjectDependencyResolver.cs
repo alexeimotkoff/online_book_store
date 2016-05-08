@@ -7,6 +7,8 @@ using Ninject;
 using online_book_store.Domain.Abstract;
 using online_book_store.Domain.Entities;
 using online_book_store.Domain.Concrete;
+using online_book_store.WebUI.Infrastructure.Abstract;
+using online_book_store.WebUI.Infrastructure.Concrete;
 
 namespace online_book_store.WebUI.Infrastructure
 {
@@ -41,6 +43,8 @@ namespace online_book_store.WebUI.Infrastructure
 
             kernel.Bind<IOrderProcessor>().To<EmailOrderProcessor>()
                 .WithConstructorArgument("settings", emailSettings);
+            
+            kernel.Bind<IAuthProvider>().To<FormAuthProvider>();
         }
     }
 }
