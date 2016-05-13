@@ -17,7 +17,7 @@ namespace online_book_store.WebUI.Controllers
         {
             repository = repo;
         }
-        public ActionResult Index()
+        public ViewResult Index()
         {
             return View(repository.Books);
         }
