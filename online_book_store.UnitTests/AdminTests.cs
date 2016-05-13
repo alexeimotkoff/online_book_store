@@ -13,7 +13,7 @@ namespace online_book_store.UnitTests
     [TestClass]
     public class AdminTests
     {
-		//Метод действия Index
+        //Метод действия Index
         [TestMethod]
         public void Index_Contains_All_Books()
         {
@@ -41,13 +41,13 @@ namespace online_book_store.UnitTests
             Assert.AreEqual("Книга2", result[1].Name);
             Assert.AreEqual("Книга3", result[2].Name);
         }
-		//Метод действия Edit
-		[TestMethod]
-		public void Can_Edit_Book()
-		{
-			// Организация - создание имитированного хранилища данных
-			Mock<IBookRepository> mock = new Mock<IBookRepository>();
-			mock.Setup(m => m.Books).Returns(new List<Book>
+        //Метод действия Edit
+        [TestMethod]
+        public void Can_Edit_Book()
+        {
+            // Организация - создание имитированного хранилища данных
+            Mock<IBookRepository> mock = new Mock<IBookRepository>();
+            mock.Setup(m => m.Books).Returns(new List<Book>
 			{
 				new Book { BookId = 1, Name = "Книга1"},
 				new Book { BookId = 2, Name = "Книга2"},
@@ -56,26 +56,26 @@ namespace online_book_store.UnitTests
 				new Book { BookId = 5, Name = "Книга5"}
 			});
 
-			// Организация - создание контроллера
-			AdminController controller = new AdminController(mock.Object);
+            // Организация - создание контроллера
+            AdminController controller = new AdminController(mock.Object);
 
-			// Действие
-			Book book1 = controller.Edit(1).ViewData.Model as Book;
-			Book book2 = controller.Edit(2).ViewData.Model as Book;
-			Book book3 = controller.Edit(3).ViewData.Model as Book;
+            // Действие
+            Book book1 = controller.Edit(1).ViewData.Model as Book;
+            Book book2 = controller.Edit(2).ViewData.Model as Book;
+            Book book3 = controller.Edit(3).ViewData.Model as Book;
 
-			// Assert
-			Assert.AreEqual(1, book1.BookId);
-			Assert.AreEqual(2, book2.BookId);
-			Assert.AreEqual(3, book3.BookId);
-		}
-		
-		[TestMethod]
-		public void Cannot_Edit_Nonexistent_Book()
-		{
-			// Организация - создание имитированного хранилища данных
-			Mock<IBookRepository> mock = new Mock<IBookRepository>();
-			mock.Setup(m => m.Books).Returns(new List<Book>
+            // Assert
+            Assert.AreEqual(1, book1.BookId);
+            Assert.AreEqual(2, book2.BookId);
+            Assert.AreEqual(3, book3.BookId);
+        }
+
+        [TestMethod]
+        public void Cannot_Edit_Nonexistent_Book()
+        {
+            // Организация - создание имитированного хранилища данных
+            Mock<IBookRepository> mock = new Mock<IBookRepository>();
+            mock.Setup(m => m.Books).Returns(new List<Book>
 			{
 				new Book { BookId = 1, Name = "Книга1"},
 				new Book { BookId = 2, Name = "Книга2"},
@@ -84,11 +84,13 @@ namespace online_book_store.UnitTests
 				new Book { BookId = 5, Name = "Книга5"}
 			});
 
-			// Организация - создание контроллера
-			AdminController controller = new AdminController(mock.Object);
+            // Организация - создание контроллера
+            AdminController controller = new AdminController(mock.Object);
 
-			// Действие
-			Book result = controller.Edit(6).ViewData.Model as Book;
+            // Действие
+            Book result = controller.Edit(6).ViewData.Model as Book;
 
-			// Assert
-		}
+            // Assert
+        }
+    }
+}
