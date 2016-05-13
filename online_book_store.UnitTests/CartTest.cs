@@ -15,6 +15,8 @@ namespace online_book_store.UnitTests
     [TestClass]
     public class CartTests
     {
+        //Проверка корзины
+        //Добавление объекта
         [TestMethod]
         public void Can_Add_New_Lines()
         {
@@ -35,6 +37,7 @@ namespace online_book_store.UnitTests
             Assert.AreEqual(results[0].Book, book1);
             Assert.AreEqual(results[1].Book, book2);
         }
+        //Добавление нескольких объектов в одну корзину
         [TestMethod]
         public void Can_Add_Quantity_For_Existing_Lines()
         {
@@ -56,6 +59,7 @@ namespace online_book_store.UnitTests
             Assert.AreEqual(results[0].Quantity, 6);    // 6 экземпляров добавлено в корзину
             Assert.AreEqual(results[1].Quantity, 1);
         }
+        //Удаление объекта
         [TestMethod]
         public void Can_Remove_Line()
         {
@@ -80,6 +84,7 @@ namespace online_book_store.UnitTests
             Assert.AreEqual(cart.Lines.Where(c => c.Book == book2).Count(), 0);
             Assert.AreEqual(cart.Lines.Count(), 2);
         }
+        //Вычисление общей стоимости объектов в корзине
         [TestMethod]
         public void Calculate_Cart_Total()
         {
@@ -99,6 +104,7 @@ namespace online_book_store.UnitTests
             // Утверждение
             Assert.AreEqual(result, 655);
         }
+        //Очистка корзины
         [TestMethod]
         public void Can_Clear_Contents()
         {
@@ -118,28 +124,7 @@ namespace online_book_store.UnitTests
             // Утверждение
             Assert.AreEqual(cart.Lines.Count(), 0);
         }
-        [TestMethod]
-        public void Adding_Book_To_Cart_Goes_To_Cart_Screen()
-        {
-            // Организация - создание имитированного хранилища
-            Mock<IBookRepository> mock = new Mock<IBookRepository>();
-            mock.Setup(m => m.Books).Returns(new List<Book> {
-        		new Book {BookId = 1, Name = "Книга1", Category = "Кат1"},
-    		}.AsQueryable());
-
-            // Организация - создание корзины
-            Cart cart = new Cart();
-
-            // Организация - создание контроллера
-            CartController controller = new CartController(mock.Object, null);
-
-            // Действие - добавить книгу в корзину
-            RedirectToRouteResult result = controller.AddToCart(cart, 2, "myUrl");
-
-            // Утверждение
-            Assert.AreEqual(result.RouteValues["action"], "Index");
-            Assert.AreEqual(result.RouteValues["returnUrl"], "myUrl");
-        }
+        //Проверка добавления в корзину
         [TestMethod]
         public void Can_Add_To_Cart()
         {
@@ -162,8 +147,9 @@ namespace online_book_store.UnitTests
             Assert.AreEqual(cart.Lines.Count(), 1);
             Assert.AreEqual(cart.Lines.ToList()[0].Book.BookId, 1);
         }
+        //Перенаправление на страницу корзины
         [TestMethod]
-        public void Adding_Game_To_Cart_Goes_To_Cart_Screen()
+        public void Adding_Book_To_Cart_Goes_To_Cart_Screen()
         {
             // Организация - создание имитированного хранилища
             Mock<IBookRepository> mock = new Mock<IBookRepository>();
@@ -202,6 +188,7 @@ namespace online_book_store.UnitTests
             Assert.AreSame(result.Cart, cart);
             Assert.AreEqual(result.ReturnUrl, "myUrl");
         }
+        //Обработка заказа
         [TestMethod]
         public void Cannot_Checkout_Empty_Cart()
         {

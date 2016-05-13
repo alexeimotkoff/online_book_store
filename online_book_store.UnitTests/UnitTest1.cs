@@ -14,6 +14,7 @@ namespace online_book_store.UnitTests
     [TestClass]
     public class UnitTest1
     {
+        //Разбиение на страницы
         [TestMethod]
         public void Can_Paginate()
         {
@@ -37,6 +38,7 @@ namespace online_book_store.UnitTests
             Assert.AreEqual(books[0].Name, "Книга4");
             Assert.AreEqual(books[1].Name, "Книга5");
         }
+        //Создание ссылок на страницы
         [TestMethod]
         public void Can_Generate_Page_Links()
         {
@@ -65,6 +67,7 @@ namespace online_book_store.UnitTests
                 + @"<a class=""btn btn-default"" href=""Page3"">3</a>",
                 result.ToString());
         }
+        //Данные разбиения для модели представления
         [TestMethod]
         public void Can_Send_Pagination_View_Model()
         {
@@ -92,6 +95,7 @@ namespace online_book_store.UnitTests
             Assert.AreEqual(pageInfo.TotalItems, 5);
             Assert.AreEqual(pageInfo.TotalPages, 2);
         }
+        //Фильтрации по категории
         [TestMethod]
         public void Can_Filter_Books()
         {
@@ -117,6 +121,7 @@ namespace online_book_store.UnitTests
             Assert.IsTrue(result[0].Name == "Книга2" && result[0].Category == "Cat2");
             Assert.IsTrue(result[1].Name == "Книга4" && result[1].Category == "Cat2");
         }
+        //Генерация списка категорий
         [TestMethod]
         public void Can_Create_Categories()
         {
@@ -141,6 +146,7 @@ namespace online_book_store.UnitTests
             Assert.AreEqual(results[1], "Поэзия");
             Assert.AreEqual(results[2], "Фэнтези");
         }
+        //Сообщение о выбранной категории
         [TestMethod]
         public void Indicates_Selected_Category()
         {
@@ -163,6 +169,7 @@ namespace online_book_store.UnitTests
             // Утверждение
             Assert.AreEqual(categoryToSelect, result);
         }
+        //Счетчик товаров определенной категории
         [TestMethod]
         public void Generate_Category_Specific_Book_Count()
         {
