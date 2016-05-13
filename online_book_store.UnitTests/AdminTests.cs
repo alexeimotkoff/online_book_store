@@ -91,6 +91,7 @@ namespace online_book_store.UnitTests
             Book result = controller.Edit(6).ViewData.Model as Book;
 
             // Assert
+            Assert.IsNull(result);
         }
     }
 }
