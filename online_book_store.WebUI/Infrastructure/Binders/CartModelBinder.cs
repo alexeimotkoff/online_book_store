@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace online_book_store.WebUI.Infrastructure.Binders
 {
-    public class CartModelBinder : IModelBinder
+    public class CartModelBinder : IModelBinder //связывание модели корзины
     {
         private const string sessionKey = "Cart";
         public object BindModel(ControllerContext controllerContext,

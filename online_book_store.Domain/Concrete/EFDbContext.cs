@@ -8,7 +8,7 @@ using System.Data.Entity;
 
 namespace online_book_store.Domain.Concrete
 {
-    public class EFDbContext : DbContext
+    public class EFDbContext : DbContext // реализация связи с базой данных
     {
         public DbSet<Book> Books { get; set; }
     }

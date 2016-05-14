@@ -8,7 +8,7 @@ using online_book_store.WebUI.Models;
 
 namespace online_book_store.WebUI.Controllers
 {
-    public class AccountController : Controller
+    public class AccountController : Controller //контроллер аутентификации
     {
         IAuthProvider authProvider;
         public AccountController(IAuthProvider auth)
@@ -16,20 +16,20 @@ namespace online_book_store.WebUI.Controllers
             authProvider = auth;
         }
 
-        public ViewResult Login()
+        public ViewResult Login() //отображение страницы автризации
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult Login(LoginViewModel model, string returnUrl)
+        public ActionResult Login(LoginViewModel model, string returnUrl) //отправка результатов аутентификации от пользователя
         {
 
-            if (ModelState.IsValid)
+            if (ModelState.IsValid) //если совпадают со словарём в Web.config
             {
-                if (authProvider.Authenticate(model.UserName, model.Password))
+                if (authProvider.Authenticate(model.UserName, model.Password)) //если пароль и логин правильные
                 {
-                    return Redirect(returnUrl ?? Url.Action("Index", "Admin"));
+                    return Redirect(returnUrl ?? Url.Action("Index", "Admin")); //показываем страницу админ-панели
                 }
                 else
                 {
@@ -37,9 +37,9 @@ namespace online_book_store.WebUI.Controllers
                     return View();
                 }
             }
-            else
+            else //если нет
             {
-                return View();
+                return View(); //ещё раз показываем страницу авторизации
             }
         }
 	}

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace online_book_store.WebUI.Infrastructure.Abstract
 {
-    public interface IAuthProvider
+    public interface IAuthProvider //интерфейс аутентификации
     {
         bool Authenticate(string username, string password);
     }

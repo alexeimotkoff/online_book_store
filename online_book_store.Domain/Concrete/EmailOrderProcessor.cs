@@ -6,7 +6,7 @@ using online_book_store.Domain.Entities;
 
 namespace online_book_store.Domain.Concrete
 {
-    public class EmailSettings
+    public class EmailSettings // информация для отправки писем
     {
         public string MailToAddress = "orders@example.com";
         public string MailFromAddress = "bookstore@example.com";
@@ -15,22 +15,22 @@ namespace online_book_store.Domain.Concrete
         public string Password = "MySmtpPassword";
         public string ServerName = "smtp.example.com";
         public int ServerPort = 587;
-        public bool WriteAsFile = true;
+        public bool WriteAsFile = true; // если true, то сохраняет письма в файл:
         public string FileLocation = @"B:\book_store_emails";
     }
     public class EmailOrderProcessor : IOrderProcessor
     {
-        private EmailSettings emailSettings;
+        private EmailSettings emailSettings; // создаём экземпляр класса для работы с электронной почтой
 
         public EmailOrderProcessor(EmailSettings settings)
         {
             emailSettings = settings;
         }
 
-        public void ProcessOrder(Cart cart, ShippingDetails shippingInfo)
+        public void ProcessOrder(Cart cart, ShippingDetails shippingInfo) //процесс покупки
         {
             using (var smtpClient = new SmtpClient())
-            {
+            {//вносим информацию по отправке писем в созданный экземпляр класса
                 smtpClient.EnableSsl = emailSettings.UseSsl;
                 smtpClient.Host = emailSettings.ServerName;
                 smtpClient.Port = emailSettings.ServerPort;
@@ -38,7 +38,7 @@ namespace online_book_store.Domain.Concrete
                 smtpClient.Credentials
                     = new NetworkCredential(emailSettings.Username, emailSettings.Password);
 
-                if (emailSettings.WriteAsFile)
+                if (emailSettings.WriteAsFile) // если включена запись в файл
                 {
                     smtpClient.DeliveryMethod
                         = SmtpDeliveryMethod.SpecifiedPickupDirectory;
@@ -46,7 +46,7 @@ namespace online_book_store.Domain.Concrete
                     smtpClient.EnableSsl = false;
                 }
 
-                StringBuilder body = new StringBuilder()
+                StringBuilder body = new StringBuilder() //тело письма
                     .AppendLine("Новый заказ обработан")
                     .AppendLine("---")
                     .AppendLine("Товары:");
@@ -79,10 +79,10 @@ namespace online_book_store.Domain.Concrete
 
                 if (emailSettings.WriteAsFile)
                 {
-                    mailMessage.BodyEncoding = Encoding.UTF8;
+                    mailMessage.BodyEncoding = Encoding.UTF8; //если запись в файл, перекодируем
                 }
 
-                smtpClient.Send(mailMessage);
+                smtpClient.Send(mailMessage); // отправляем
             }
         }
     }
