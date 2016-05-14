@@ -38,5 +38,19 @@ namespace online_book_store.WebUI.Controllers
            };
            return View(model);
        }
+       public FileContentResult GetImage(int bookId)
+       {
+           Book book = repository.Books
+               .FirstOrDefault(g => g.BookId == bookId);
+
+           if (book != null)
+           {
+               return File(book.ImageData, book.ImageMimeType);
+           }
+           else
+           {
+               return null;
+           }
+       }
 	}
 }

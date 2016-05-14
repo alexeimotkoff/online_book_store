@@ -28,10 +28,16 @@ namespace online_book_store.WebUI.Controllers
             return View(book);
         }
         [HttpPost]
-        public ActionResult Edit(Book book)
+        public ActionResult Edit(Book book, HttpPostedFileBase image = null)
         {
             if (ModelState.IsValid)
             {
+                if (image != null)
+                {
+                    book.ImageMimeType = image.ContentType;
+                    book.ImageData = new byte[image.ContentLength];
+                    image.InputStream.Read(book.ImageData, 0, image.ContentLength);
+                }
                 repository.SaveBook(book);
                 TempData["message"] = string.Format("Изменения в книге \"{0}\" были сохранены", book.Name);
                 return RedirectToAction("Index");

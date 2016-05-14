@@ -29,6 +29,8 @@ namespace online_book_store.Domain.Concrete
                     dbEntry.Description = book.Description;
                     dbEntry.Price = book.Price;
                     dbEntry.Category = book.Category;
+                    dbEntry.ImageData = book.ImageData;
+                    dbEntry.ImageMimeType = book.ImageMimeType;
                 }
             }
             context.SaveChanges();
