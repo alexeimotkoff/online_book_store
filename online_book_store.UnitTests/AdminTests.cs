@@ -115,6 +115,7 @@ namespace online_book_store.UnitTests
             // Утверждение - проверка типа результата метода
             Assert.IsNotInstanceOfType(result, typeof(ViewResult));
         }
+        //невозможность сохранения некорректных данных
         [TestMethod]
         public void Cannot_Save_Invalid_Changes()
         {

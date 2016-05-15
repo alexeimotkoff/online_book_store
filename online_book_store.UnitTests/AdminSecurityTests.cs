@@ -36,7 +36,7 @@ namespace online_book_store.UnitTests
             Assert.IsInstanceOfType(result, typeof(RedirectResult));
             Assert.AreEqual("/MyURL", ((RedirectResult)result).Url);
         }
-
+        // Невозможность залогиниться с некорректными данными
         [TestMethod]
         public void Cannot_Login_With_Invalid_Credentials()
         {
