@@ -60,16 +60,16 @@ namespace online_book_store.UnitTests
             AdminController controller = new AdminController(mock.Object);
 
             // Действие
-            Book book1 = controller.Edit(1).ViewData.Model as Book;
-            Book book2 = controller.Edit(2).ViewData.Model as Book;
-            Book book3 = controller.Edit(3).ViewData.Model as Book;
+            Book book1 = controller.Edit(1).ViewData.Model as Book; //запрашиваем на редактирование 1-ю книгу
+            Book book2 = controller.Edit(2).ViewData.Model as Book; //2-ю книгу
+            Book book3 = controller.Edit(3).ViewData.Model as Book; //3-ю книгу
 
             // Assert
             Assert.AreEqual(1, book1.BookId);
             Assert.AreEqual(2, book2.BookId);
             Assert.AreEqual(3, book3.BookId);
         }
-
+        //Невозможность редактирования несуществующей книги
         [TestMethod]
         public void Cannot_Edit_Nonexistent_Book()
         {
@@ -88,9 +88,10 @@ namespace online_book_store.UnitTests
             AdminController controller = new AdminController(mock.Object);
 
             // Действие
-            Book result = controller.Edit(6).ViewData.Model as Book;
+            Book result = controller.Edit(6).ViewData.Model as Book; //пытаемся отредактирвоать 6-ю книгу, которой нет
 
             // Assert
+            Assert.IsNull(result); //получаем нуль
         }
         //Редактирование (сохранение обновлений объектов и не сохранение недопустимых обновлений)
         [TestMethod]

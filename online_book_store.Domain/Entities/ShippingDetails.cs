@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace online_book_store.Domain.Entities
 {
-    public class ShippingDetails
+    public class ShippingDetails //детали доставки
     {
         [Required(ErrorMessage = "Укажите как вас зовут")]
         public string Name { get; set; }
@@ -30,6 +30,6 @@ namespace online_book_store.Domain.Entities
         [Display(Name = "Страна")]
         public string Country { get; set; }
 
-        public bool GiftWrap { get; set; }
+        public bool GiftWrap { get; set; } //использовать ли подарочную упаковку
     }
 }

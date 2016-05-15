@@ -7,7 +7,7 @@ using online_book_store.Domain.Abstract;
 
 namespace online_book_store.WebUI.Controllers
 {
-    public class NavController : Controller
+    public class NavController : Controller //контроллер меню навигации по категориям
     {
         //
         // GET: /Nav/

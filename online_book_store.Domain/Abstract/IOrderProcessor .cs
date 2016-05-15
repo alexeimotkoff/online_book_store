@@ -7,8 +7,8 @@ using online_book_store.Domain.Entities;
 
 namespace online_book_store.Domain.Abstract
 {
-    public interface IOrderProcessor
+    public interface IOrderProcessor //интерфейс совершения покупок в корзине
     {
-        void ProcessOrder(Cart cart, ShippingDetails shippingDetails);
+        void ProcessOrder(Cart cart, ShippingDetails shippingDetails); //покупка
     }
 }

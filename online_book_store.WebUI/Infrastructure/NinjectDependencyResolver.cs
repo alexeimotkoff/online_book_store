@@ -12,7 +12,7 @@ using online_book_store.WebUI.Infrastructure.Concrete;
 
 namespace online_book_store.WebUI.Infrastructure
 {
-    public class NinjectDependencyResolver : IDependencyResolver
+    public class NinjectDependencyResolver : IDependencyResolver //настройка контроллера DI. Распознавание зависимостей
     {
         private IKernel kernel;
 
@@ -32,7 +32,7 @@ namespace online_book_store.WebUI.Infrastructure
             return kernel.GetAll(serviceType);
         }
 
-        private void AddBindings()
+        private void AddBindings() // Привязка
         {
             kernel.Bind<IBookRepository>().To<EFBookRepository>();
             EmailSettings emailSettings = new EmailSettings
