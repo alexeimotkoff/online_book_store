@@ -41,7 +41,7 @@ namespace GameStore.UnitTests
             // Утверждение
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(FileResult));
-            Assert.AreEqual(game.ImageMimeType, ((FileResult)result).ContentType);
+            Assert.AreEqual(book.ImageMimeType, ((FileResult)result).ContentType);
         }
 
         [TestMethod]
