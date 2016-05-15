@@ -7,11 +7,12 @@ using System.Linq;
 using System.Web.Mvc;
 using System.Collections.Generic;
 
-namespace GameStore.UnitTests
+namespace online_book_store.UnitTests
 {
     [TestClass]
     public class ImageTests
     {
+        //ивлечение изображений
         [TestMethod]
         public void Can_Retrieve_Image_Data()
         {
@@ -36,14 +37,14 @@ namespace GameStore.UnitTests
             BookController controller = new BookController(mock.Object);
 
             // Действие - вызов метода действия GetImage()
-            ActionResult result = controller.GetImage(2);
+            ActionResult result = controller.GetImage(2); //изображение 2-й книги
 
             // Утверждение
-            Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(FileResult));
-            Assert.AreEqual(book.ImageMimeType, ((FileResult)result).ContentType);
+            Assert.IsNotNull(result); // есть данные
+            Assert.IsInstanceOfType(result, typeof(FileResult)); //соответствие типов
+            Assert.AreEqual(book.ImageMimeType, ((FileResult)result).ContentType); //соответствие расширения
         }
-
+        // Изображение не загружается для некорректных данных (если нет ID книги с изображением)
         [TestMethod]
         public void Cannot_Retrieve_Image_Data_For_Invalid_ID()
         {
@@ -61,7 +62,7 @@ namespace GameStore.UnitTests
             ActionResult result = controller.GetImage(10);
 
             // Утверждение
-            Assert.IsNull(result);
+            Assert.IsNull(result); //нет изображения
         }
     }
 }
