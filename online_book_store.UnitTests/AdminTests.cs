@@ -92,5 +92,79 @@ namespace online_book_store.UnitTests
 
             // Assert
         }
+        //Редактирование (сохранение обновлений объектов и не сохранение недопустимых обновлений)
+        [TestMethod]
+        public void Can_Save_Valid_Changes()
+        {
+            // Организация - создание имитированного хранилища данных
+            Mock<IBookRepository> mock = new Mock<IBookRepository>();
+
+            // Организация - создание контроллера
+            AdminController controller = new AdminController(mock.Object);
+
+            // Организация - создание объекта Book
+            Book book = new Book { Name = "Test" };
+
+            // Действие - попытка сохранения товара
+            ActionResult result = controller.Edit(book);
+
+            // Утверждение - проверка того, что к хранилищу производится обращение
+            mock.Verify(m => m.SaveBook(book));
+
+            // Утверждение - проверка типа результата метода
+            Assert.IsNotInstanceOfType(result, typeof(ViewResult));
+        }
+        [TestMethod]
+        public void Cannot_Save_Invalid_Changes()
+        {
+            // Организация - создание имитированного хранилища данных
+            Mock<IBookRepository> mock = new Mock<IBookRepository>();
+
+            // Организация - создание контроллера
+            AdminController controller = new AdminController(mock.Object);
+
+            // Организация - создание объекта Book
+            Book book = new Book { Name = "Test" };
+
+            // Организация - добавление ошибки в состояние модели
+            controller.ModelState.AddModelError("error", "error");
+
+            // Действие - попытка сохранения товара
+            ActionResult result = controller.Edit(book);
+
+            // Утверждение - проверка того, что обращение к хранилищу НЕ производится 
+            mock.Verify(m => m.SaveBook(It.IsAny<Book>()), Times.Never());
+
+            // Утверждение - проверка типа результата метода
+            Assert.IsInstanceOfType(result, typeof(ViewResult));
+        }
+        //Удаление товаров
+        [TestMethod]
+        public void Can_Delete_Valid_Books()
+        {
+            // Организация - создание объекта Book
+            Book book = new Book { BookId = 2, Name = "Книга2" };
+
+            // Организация - создание имитированного хранилища данных
+            Mock<IBookRepository> mock = new Mock<IBookRepository>();
+            mock.Setup(m => m.Books).Returns(new List<Book>
+			{
+				new Book { BookId = 1, Name = "Книга1"},
+				new Book { BookId = 2, Name = "Книга2"},
+				new Book { BookId = 3, Name = "Книга3"},
+				new Book { BookId = 4, Name = "Книга4"},
+				new Book { BookId = 5, Name = "Книга5"}
+			});
+
+            // Организация - создание контроллера
+            AdminController controller = new AdminController(mock.Object);
+
+            // Действие - удаление книги
+            controller.Delete(book.BookId);
+
+            // Утверждение - проверка того, что метод удаления в хранилище
+            // вызывается для корректного объекта Book
+            mock.Verify(m => m.DeleteBook(book.BookId));
+        }
     }
 }

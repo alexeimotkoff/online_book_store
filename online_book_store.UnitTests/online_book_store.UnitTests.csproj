@@ -111,6 +111,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CartTest.cs" />
     <Compile Include="AdminTests.cs" />
+    <Compile Include="AdminSecurityTests.cs" />
+    <Compile Include="ImageTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
