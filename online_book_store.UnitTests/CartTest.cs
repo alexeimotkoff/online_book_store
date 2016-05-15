@@ -55,9 +55,9 @@ namespace online_book_store.UnitTests
             List<CartLine> results = cart.Lines.OrderBy(c => c.Book.BookId).ToList();
 
             // Утверждение
-            Assert.AreEqual(results.Count(), 2);
-            Assert.AreEqual(results[0].Quantity, 6);    // 6 экземпляров добавлено в корзину
-            Assert.AreEqual(results[1].Quantity, 1);
+            Assert.AreEqual(results.Count(), 2); // всего книг
+            Assert.AreEqual(results[0].Quantity, 6);    // 6 экземпляров 1-й книги добавлено в корзину
+            Assert.AreEqual(results[1].Quantity, 1);    // 1 экземпляр 2-й книги добавлен в корзину
         }
         //Удаление объекта
         [TestMethod]
@@ -78,11 +78,11 @@ namespace online_book_store.UnitTests
             cart.AddItem(book2, 1);
 
             // Действие
-            cart.RemoveLine(book2);
+            cart.RemoveLine(book2); //удаление 2-й книги
 
             // Утверждение
-            Assert.AreEqual(cart.Lines.Where(c => c.Book == book2).Count(), 0);
-            Assert.AreEqual(cart.Lines.Count(), 2);
+            Assert.AreEqual(cart.Lines.Where(c => c.Book == book2).Count(), 0); //второй книги нет в корзине
+            Assert.AreEqual(cart.Lines.Count(), 2); //в корзине 2 осталось 2 книги
         }
         //Вычисление общей стоимости объектов в корзине
         [TestMethod]
@@ -138,14 +138,14 @@ namespace online_book_store.UnitTests
             Cart cart = new Cart();
 
             // Организация - создание контроллера
-            CartController controller = new CartController(mock.Object, null);
+            CartController controller = new CartController(mock.Object, null); //тестируем контроллер
 
             // Действие - добавить игру в корзину
             controller.AddToCart(cart, 1, null);
 
             // Утверждение
-            Assert.AreEqual(cart.Lines.Count(), 1);
-            Assert.AreEqual(cart.Lines.ToList()[0].Book.BookId, 1);
+            Assert.AreEqual(cart.Lines.Count(), 1); //всего книг должно быть 1
+            Assert.AreEqual(cart.Lines.ToList()[0].Book.BookId, 1); //отображается правильная книга
         }
         //Перенаправление на страницу корзины
         [TestMethod]
@@ -170,7 +170,7 @@ namespace online_book_store.UnitTests
             Assert.AreEqual(result.RouteValues["action"], "Index");
             Assert.AreEqual(result.RouteValues["returnUrl"], "myUrl");
         }
-        // Проверяем URL
+        // Проверяем URL, по которому можно вернуться в каталог
         [TestMethod]
         public void Can_View_Cart_Contents()
         {
@@ -190,7 +190,7 @@ namespace online_book_store.UnitTests
         }
         //Обработка заказа
         [TestMethod]
-        public void Cannot_Checkout_Empty_Cart()
+        public void Cannot_Checkout_Empty_Cart() //заказ невозможно обработать, если корзина пустая
         {
             // Организация - создание имитированного обработчика заказов
             Mock<IOrderProcessor> mock = new Mock<IOrderProcessor>();
@@ -218,7 +218,7 @@ namespace online_book_store.UnitTests
             Assert.AreEqual(false, result.ViewData.ModelState.IsValid);
         }
         [TestMethod]
-        public void Cannot_Checkout_Invalid_ShippingDetails()
+        public void Cannot_Checkout_Invalid_ShippingDetails() //заказ невозможно обработать, если введены некорректные данные по заказу
         {
             // Организация - создание имитированного обработчика заказов
             Mock<IOrderProcessor> mock = new Mock<IOrderProcessor>();
@@ -247,7 +247,7 @@ namespace online_book_store.UnitTests
             Assert.AreEqual(false, result.ViewData.ModelState.IsValid);
         }
         [TestMethod]
-        public void Can_Checkout_And_Submit_Order()
+        public void Can_Checkout_And_Submit_Order() //обработка нормальных заказов
         {
             // Организация - создание имитированного обработчика заказов
             Mock<IOrderProcessor> mock = new Mock<IOrderProcessor>();

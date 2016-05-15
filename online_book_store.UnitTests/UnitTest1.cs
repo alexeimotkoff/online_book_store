@@ -27,16 +27,16 @@ namespace online_book_store.UnitTests
         		new Book { BookId = 3, Name = "Книга3"},
         		new Book { BookId = 4, Name = "Книга4"},
         		new Book { BookId = 5, Name = "Книга5"}
-    		});
+    		}); //создание иммитированного хранилища
             BookController controller = new BookController(mock.Object);
-            controller.pageSize = 3;
+            controller.pageSize = 3; // сколько товаров на странице может отображаться
             // Действие (act)
-            BooksListViewModel result = (BooksListViewModel)controller.List(null, 2).Model;
+            BooksListViewModel result = (BooksListViewModel)controller.List(null, 2).Model; //создаём модель и переходим на 2-ю страницу
             // Утверждение
-            List<Book> books = result.Books.ToList();
-            Assert.IsTrue(books.Count == 2);
-            Assert.AreEqual(books[0].Name, "Книга4");
-            Assert.AreEqual(books[1].Name, "Книга5");
+            List<Book> books = result.Books.ToList(); //конвертируем в список
+            Assert.IsTrue(books.Count == 2); //всего книг на 2 странице 2:
+            Assert.AreEqual(books[0].Name, "Книга4"); //4-я
+            Assert.AreEqual(books[1].Name, "Книга5"); //и 5-я
         }
         //Создание ссылок на страницы
         [TestMethod]
@@ -50,9 +50,9 @@ namespace online_book_store.UnitTests
             // Организация - создание объекта PagingInfo
             PagingInfo pagingInfo = new PagingInfo
             {
-                CurrentPage = 2,
-                TotalItems = 28,
-                ItemsPerPage = 10
+                CurrentPage = 2, //текущая страница
+                TotalItems = 28, //всего товаров
+                ItemsPerPage = 10 //товаров на странице
             };
 
             // Организация - настройка делегата с помощью лямбда-выражения
@@ -63,7 +63,7 @@ namespace online_book_store.UnitTests
 
             // Утверждение
             Assert.AreEqual(@"<a class=""btn btn-default"" href=""Page1"">1</a>"
-                + @"<a class=""btn btn-default btn-primary selected"" href=""Page2"">2</a>"
+                + @"<a class=""btn btn-default btn-primary selected"" href=""Page2"">2</a>" //вторая страница выделена (selected)
                 + @"<a class=""btn btn-default"" href=""Page3"">3</a>",
                 result.ToString());
         }
@@ -80,20 +80,20 @@ namespace online_book_store.UnitTests
         		new Book { BookId = 3, Name = "Книга3"},
         		new Book { BookId = 4, Name = "Книга4"},
         		new Book { BookId = 5, Name = "Книга5"}
-    		});
-            BookController controller = new BookController(mock.Object);
-            controller.pageSize = 3;
+    		}); //иммитированное хранилище
+            BookController controller = new BookController(mock.Object); //создаём контроллер
+            controller.pageSize = 3; //3 товара на странице
 
             // Act
             BooksListViewModel result
-            = (BooksListViewModel)controller.List(null, 2).Model;
+            = (BooksListViewModel)controller.List(null, 2).Model; //создаём модель представления, переходим на 2 страницу
 
             // Assert
             PagingInfo pageInfo = result.PagingInfo;
-            Assert.AreEqual(pageInfo.CurrentPage, 2);
-            Assert.AreEqual(pageInfo.ItemsPerPage, 3);
-            Assert.AreEqual(pageInfo.TotalItems, 5);
-            Assert.AreEqual(pageInfo.TotalPages, 2);
+            Assert.AreEqual(pageInfo.CurrentPage, 2); //текущая страница
+            Assert.AreEqual(pageInfo.ItemsPerPage, 3); //товаров на странице
+            Assert.AreEqual(pageInfo.TotalItems, 5); //всего товаров
+            Assert.AreEqual(pageInfo.TotalPages, 2); //всего страниц
         }
         //Фильтрации по категории
         [TestMethod]
@@ -114,12 +114,12 @@ namespace online_book_store.UnitTests
 
             // Action
             List<Book> result = ((BooksListViewModel)controller.List("Cat2", 1).Model)
-                .Books.ToList();
+                .Books.ToList(); //переходим на 1-ю страницу 2-й категории
 
             // Assert
-            Assert.AreEqual(result.Count(), 2);
-            Assert.IsTrue(result[0].Name == "Книга2" && result[0].Category == "Cat2");
-            Assert.IsTrue(result[1].Name == "Книга4" && result[1].Category == "Cat2");
+            Assert.AreEqual(result.Count(), 2); //должно быть 2 категории
+            Assert.IsTrue(result[0].Name == "Книга2" && result[0].Category == "Cat2"); //книга 2 во 2-й категории
+            Assert.IsTrue(result[1].Name == "Книга4" && result[1].Category == "Cat2"); //книга 4 во второй категории
         }
         //Генерация списка категорий
         [TestMethod]
@@ -137,11 +137,11 @@ namespace online_book_store.UnitTests
             // Организация - создание контроллера
             NavController target = new NavController(mock.Object);
 
-            // Действие - получение набора категорий
+            // Действие - получение набора отсортированных категорий
             List<string> results = ((IEnumerable<string>)target.Menu().Model).ToList();
 
             // Утверждение
-            Assert.AreEqual(results.Count(), 3);
+            Assert.AreEqual(results.Count(), 3); //должно быть 3 категории
             Assert.AreEqual(results[0], "Классическая литература");
             Assert.AreEqual(results[1], "Поэзия");
             Assert.AreEqual(results[2], "Фэнтези");
@@ -184,13 +184,13 @@ namespace online_book_store.UnitTests
         		new Book { BookId = 5, Name = "Книга5", Category="Cat3"}
     		});
             BookController controller = new BookController(mock.Object);
-            controller.pageSize = 3;
+            controller.pageSize = 3; //товаров на странице
 
             // Действие - тестирование счетчиков товаров для различных категорий
-            int res1 = ((BooksListViewModel)controller.List("Cat1").Model).PagingInfo.TotalItems;
-            int res2 = ((BooksListViewModel)controller.List("Cat2").Model).PagingInfo.TotalItems;
-            int res3 = ((BooksListViewModel)controller.List("Cat3").Model).PagingInfo.TotalItems;
-            int resAll = ((BooksListViewModel)controller.List(null).Model).PagingInfo.TotalItems;
+            int res1 = ((BooksListViewModel)controller.List("Cat1").Model).PagingInfo.TotalItems; //сколько книг 1-й категории
+            int res2 = ((BooksListViewModel)controller.List("Cat2").Model).PagingInfo.TotalItems; //2-й категории
+            int res3 = ((BooksListViewModel)controller.List("Cat3").Model).PagingInfo.TotalItems; //3-й категории
+            int resAll = ((BooksListViewModel)controller.List(null).Model).PagingInfo.TotalItems; //сколько всего книг
 
             // Утверждение
             Assert.AreEqual(res1, 2);
